@@ -9,7 +9,7 @@ Bij betalende evenementen wordt de mogelijkheid als organistator aangeboden om t
 
 ## Waarom?
 
-Het is mij al veel voorgevallen dat je logeert in een stad (ook buitenland) waar je niks of niemand kent. 
+Het is mij al veel voorgevallen dat je logeert in een stad (ook buitenland) waar je niks of niemand kent.
 Dit maakt het moeilijker om iets te vinden om te doen of naar een feestje te gaan.
 Natuurlijk heb je ook de evenementen sectie op Facebook maar die is vrij onoverzichtelijk en geeft vaak maar weinig events weer.
 De evenementen worden hier ook enkel zichtbaar als een vriend je hiervoor uitnodigt.
@@ -37,20 +37,18 @@ Verder zal er ook een profieltab moeten zijn waarbij je je betalingsgegevens kun
 
 Er zal ook een onderscheid moeten komen tussen organisator en bezoeker tenzij ik een manier vind om deze aan één zelfde account te koppelen.
 
-Ik zal starten met enkel events via de app zelf toe te voegen als organisator. 
+Ik zal starten met enkel events via de app zelf toe te voegen als organisator.
 Het zou leuk zijn als ik bijvoorbeeld Facebook events kan inladen in de app zodat de organisator niet op verschillende platformen steeds een event moet toevoegen.
-
 
 ## UI
 
-Ik wil een overzichtelijke UI die verschillende leeftijdsgroepen aanspreekt. 
+Ik wil een overzichtelijke UI die verschillende leeftijdsgroepen aanspreekt.
 Deze app is niet bedoeld om enkel 'feest events' weer te geven maar voor iedereen wat wils uitlopend van concerten tot wijkfeesten.
 
 De kaart moet een weergave zijn met gepersonaliseerde pins die events voorstellen in hun eigen categorie.
 
 De flow van de app moet vrij simpel zijn maar met een aantrekkelijk design om zo verschillende doelgroepen aan te kunnen spreken.
 
-
 ## Platform
 
-Ik ga mij vooral focussen op IOS met eventuele uitbreiding op Android. 
+Ik ga mij vooral focussen op IOS met eventuele uitbreiding op Android.
