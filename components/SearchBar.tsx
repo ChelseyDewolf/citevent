@@ -4,11 +4,12 @@ import { Ionicons } from '@expo/vector-icons';
 import tw from 'twrnc';
 import { useState } from 'react';
 
-export const SearchBar = () => {
+export const SearchBar = (props: any) => {
   const [searchInput, setsearchInput] = useState<string | undefined>();
 
   const handleInputSearch = (searchInput: string) => {
-    setsearchInput(searchInput);
+    //setsearchInput(searchInput);
+    props.onInput(searchInput);
   };
   return (
     <>

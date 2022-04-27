@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { FlatList, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -40,23 +41,32 @@ const notes: any = [
   },
 ];
 
-const renderNotes = ({ item }: { item: EventSM }) => {
-  const n: EventSM = {
-    id: item.id,
-    category: item.category,
-    title: item.title,
-    price: item.price,
-    content: item.content,
+const Settings = () => {
+  const [search, setSearch]: [string, (search: string) => void] = useState('');
+
+  const renderNotes = ({ item }: { item: EventSM }) => {
+    const n: EventSM = {
+      id: item.id,
+      category: item.category,
+      title: item.title,
+      price: item.price,
+      content: item.content,
+    };
+
+    if (search! && n.title.toLowerCase().includes(search.toLowerCase())) {
+      return <SuggestedEvents note={item} key={item.title} />;
+    }
   };
 
-  return <SuggestedEvents note={item} key={item.title} />;
-};
+  const searchHandler = (searchInput: any) => {
+    console.log(searchInput);
+    setSearch(searchInput);
+  };
 
-const Settings = () => {
   return (
     <SafeAreaView style={tw.style('pl-5', 'pr-5', 'bg-[#D3FF53]', 'h-full')}>
       <Header />
-      <SearchBar />
+      <SearchBar onInput={searchHandler} />
       <Text style={tw.style('text-2xl', 'font-bold', 'pb-3')}>
         Suggested Events
       </Text>
