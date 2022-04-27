@@ -53,13 +53,12 @@ const Settings = () => {
       content: item.content,
     };
 
-    if (search! && n.title.toLowerCase().includes(search.toLowerCase())) {
+    if (search && n.title.toLowerCase().includes(search.toLowerCase())) {
       return <SuggestedEvents note={item} key={item.title} />;
     }
   };
 
   const searchHandler = (searchInput: any) => {
-    console.log(searchInput);
     setSearch(searchInput);
   };
 
@@ -67,16 +66,32 @@ const Settings = () => {
     <SafeAreaView style={tw.style('pl-5', 'pr-5', 'bg-[#D3FF53]', 'h-full')}>
       <Header />
       <SearchBar onInput={searchHandler} />
-      <Text style={tw.style('text-2xl', 'font-bold', 'pb-3')}>
-        Suggested Events
-      </Text>
-      <FlatList
-        data={notes}
-        renderItem={renderNotes}
-        ListHeaderComponent={<SuggestedEvents />}
-        showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}
-      />
+      {(() => {
+        if (search) {
+          //Here needs the full array of events to come
+          return (
+            <>
+              <Text style={tw.style('text-2xl', 'font-bold', 'pb-3')}>
+                Searches
+              </Text>
+              <FlatList
+                data={notes}
+                renderItem={renderNotes}
+                ListHeaderComponent={<SuggestedEvents />}
+                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}
+              />
+            </>
+          );
+        }
+        //Here needs the suggesteds to come
+        console.log('nothing');
+        return (
+          <Text style={tw.style('text-2xl', 'font-bold', 'pb-3')}>
+            Suggested Events
+          </Text>
+        );
+      })()}
     </SafeAreaView>
   );
 };
