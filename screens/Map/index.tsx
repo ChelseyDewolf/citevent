@@ -2,13 +2,18 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import tw from 'twrnc';
 import MapView, { Marker } from 'react-native-maps';
-import { StyleSheet, View, Dimensions } from 'react-native';
+import { StyleSheet, View, Dimensions, TouchableOpacity } from 'react-native';
 import { CustomMarker } from '../../components/CustomMarker';
+import uuid from 'react-native-uuid';
 
 import { useRef, useState } from 'react';
 
 const Settings = () => {
   const mapRef = useRef(null);
+
+  let cord = '';
+
+  const [data, setData] = useState('');
 
   const [region, setRegion] = useState({
     latitude: 50.819478,
@@ -27,6 +32,7 @@ const Settings = () => {
   const allMarkers = {
     markers: [
       {
+        id: uuid.v4(),
         title: 'Paute Farty',
         coordinates: {
           latitude: 50.82617218243292,
@@ -36,6 +42,7 @@ const Settings = () => {
         },
       },
       {
+        id: uuid.v4(),
         title: "T'Arsenaal x De Plekke",
         coordinates: {
           latitude: 50.80738469661718,
@@ -47,8 +54,18 @@ const Settings = () => {
     ],
   };
 
-  const childToParent = () => {
-    //mapRef.current.animateToRegion(coordinates, 2 * 1000);
+  const childToParent = (childdata) => {
+    setData(childdata);
+    console.log(data);
+    mapRef.current.animateToRegion(pauteFarty, 2 * 1000);
+  };
+
+  const test = (cord) => {
+    if (cord === '') {
+      //
+    } else {
+      mapRef.current.animateToRegion(cord, 2 * 1000);
+    }
   };
 
   return (
@@ -59,14 +76,19 @@ const Settings = () => {
         initialRegion={{
           latitude: 50.819478,
           longitude: 3.257726,
-          latitudeDelta: 0.05,
-          longitudeDelta: 0.05,
+          latitudeDelta: 0.075,
+          longitudeDelta: 0.075,
         }}
       >
         {allMarkers.markers.map((marker) => (
-          <Marker coordinate={marker.coordinates}>
-            <CustomMarker childToParent={childToParent} />
-          </Marker>
+          <TouchableOpacity
+            onPress={() => test(marker.coordinates)}
+            key={marker.id}
+          >
+            <Marker coordinate={marker.coordinates}>
+              <CustomMarker />
+            </Marker>
+          </TouchableOpacity>
         ))}
 
         {/* image={require('../../assets/sunny.png')} */}
