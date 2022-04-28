@@ -1,12 +1,12 @@
-import { SafeAreaView } from 'react-native-safe-area-context';
-
-import tw from 'twrnc';
-import MapView, { Marker } from 'react-native-maps';
+import { useEffect, useRef, useState } from 'react';
 import { StyleSheet, View, Dimensions, TouchableOpacity } from 'react-native';
 import { CustomMarker } from '../../components/CustomMarker';
-import uuid from 'react-native-uuid';
 
-import { useRef, useState } from 'react';
+import MapView, { Marker } from 'react-native-maps';
+
+import uuid from 'react-native-uuid';
+import tw from 'twrnc';
+import * as Location from 'expo-location';
 
 const Settings = () => {
   const mapRef = useRef(null);
@@ -14,20 +14,14 @@ const Settings = () => {
   let cord = '';
 
   const [data, setData] = useState('');
-
-  const [region, setRegion] = useState({
-    latitude: 50.819478,
-    longitude: 3.257726,
-    latitudeDelta: 0.05,
-    longitudeDelta: 0.05,
-  });
-
-  const pauteFarty = {
-    latitude: 50.82617218243292,
-    longitude: 3.2246552854948565,
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+  const [currentLocation, setCurrentLocation] = useState({
+    latitude: 50.82469601099183,
+    longitude: 3.250216015205323,
     latitudeDelta: 0.02,
     longitudeDelta: 0.02,
-  };
+  });
 
   const allMarkers = {
     markers: [
@@ -54,19 +48,37 @@ const Settings = () => {
     ],
   };
 
-  const childToParent = (childdata) => {
-    setData(childdata);
-    console.log(data);
-    mapRef.current.animateToRegion(pauteFarty, 2 * 1000);
-  };
-
-  const test = (cord) => {
+  const test = (cord: any) => {
     if (cord === '') {
       //
     } else {
       mapRef.current.animateToRegion(cord, 2 * 1000);
     }
   };
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+      setCurrentLocation({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      });
+    })();
+  }, []);
+
+  let text = 'Waiting..';
+  if (errorMsg) {
+    text = errorMsg;
+  } else if (location) {
+    text = JSON.stringify(location);
+  }
 
   return (
     <View style={styles.container}>
@@ -85,12 +97,18 @@ const Settings = () => {
             onPress={() => test(marker.coordinates)}
             key={marker.id}
           >
-            <Marker coordinate={marker.coordinates}>
+            <Marker
+              title={marker.title}
+              description={marker.title}
+              coordinate={marker.coordinates}
+            >
               <CustomMarker />
             </Marker>
           </TouchableOpacity>
         ))}
-
+        <Marker coordinate={currentLocation}>
+          <CustomMarker />
+        </Marker>
         {/* image={require('../../assets/sunny.png')} */}
       </MapView>
     </View>
